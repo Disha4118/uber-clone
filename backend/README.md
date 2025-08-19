@@ -148,3 +148,103 @@ Content-Type: application/json
   "message": "string"
 }
 ```
+
+## GET /users/profile
+
+Fetches the authenticated user's profile.
+
+### URL
+
+`GET /users/profile`
+
+### Headers
+
+- `Authorization`: `Bearer <token>` or cookie named `token` (httpOnly)
+
+### Responses
+
+#### 200 OK
+
+Returns the user profile.
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user": {
+    "_id": "string",
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string"
+  }
+}
+```
+
+#### 401 Unauthorized
+
+Authentication required or invalid token.
+
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+  "message": "string"
+}
+```
+
+#### 404 Not Found
+
+User not found.
+
+```json
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+  "message": "User not found"
+}
+```
+
+## POST /users/logout
+
+Logs out the authenticated user by clearing the auth cookie and blacklisting the token.
+
+### URL
+
+`POST /users/logout`
+
+### Headers
+
+- `Authorization`: `Bearer <token>` or cookie named `token` (httpOnly)
+
+### Responses
+
+#### 200 OK
+
+Logout successful.
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "message": "Logged out successfully"
+}
+```
+
+#### 401 Unauthorized
+
+No token provided or invalid authentication.
+
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+  "message": "No token provided"
+}
+```
