@@ -325,3 +325,181 @@ Content-Type: application/json
   ]
 }
 ```
+
+## POST /captains/login
+
+Logs in an existing captain and returns an authentication token.
+
+### URL
+
+`POST /captains/login`
+
+### Request Body
+
+```json
+{
+  "email": "string",     // required, valid email
+  "password": "string"   // required
+}
+```
+
+- `email`: Captain's email address (required, valid format)
+- `password`: Captain's password (required)
+
+### Responses
+
+#### 200 OK
+
+Login successful. Returns the captain object and a JWT token.
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "captain": {
+    "_id": "string",
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "status": "active",
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": number,
+      "vehicleType": "string"
+    }
+  },
+  "token": "string"      // JWT authentication token
+}
+```
+
+#### 400 Bad Request
+
+Validation failed. Missing or invalid fields.
+
+```json
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+  "errors": [
+    { "msg": "string", "param": "string", "location": "body" }
+    // ... additional errors
+  ]
+}
+```
+
+#### 401 Unauthorized
+
+Login failed due to invalid credentials.
+
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+  "message": "Invalid email or password"
+}
+```
+
+## GET /captains/profile
+
+Fetches the authenticated captain's profile.
+
+### URL
+
+`GET /captains/profile`
+
+### Headers
+
+- `Authorization`: `Bearer <token>` or cookie named `token` (httpOnly)
+
+### Responses
+
+#### 200 OK
+
+Returns the captain profile.
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "captain": {
+    "_id": "string",
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "status": "active",
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": number,
+      "vehicleType": "string"
+    }
+  }
+}
+```
+
+#### 401 Unauthorized
+
+Authentication required or invalid token.
+
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{ "message": "No token provided" }
+```
+
+#### 404 Not Found
+
+Captain not found.
+
+```json
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{ "message": "Captain not found" }
+```
+
+## POST /captains/logout
+
+Logs out the authenticated captain by clearing the auth cookie and blacklisting the token.
+
+### URL
+
+`POST /captains/logout`
+
+### Headers
+
+- `Authorization`: `Bearer <token>` or cookie named `token` (httpOnly)
+
+### Responses
+
+#### 200 OK
+
+Logout successful.
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "message": "Logged out successfully" }
+```
+
+#### 401 Unauthorized
+
+No token provided or invalid authentication.
+
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{ "message": "No token provided" }
+```
