@@ -6,6 +6,7 @@ const express=require('express');
 const app=express();
 const cookieparser=require('cookie-parser');
 const userRoutes=require('./routes/user.routes');
+const captainRoutes=require('./routes/captain.routes');
 
 connectDB();
 
@@ -17,4 +18,5 @@ app.get('/',(req,res)=>{
     res.send('Hello World');
 });
 app.use('/users', userRoutes);
+app.use('/captains', captainRoutes);
 module.exports=app;

@@ -248,3 +248,80 @@ Content-Type: application/json
   "message": "No token provided"
 }
 ```
+
+## POST /captains/register
+
+Registers a new captain in the system.
+
+### URL
+
+`POST /captains/register`
+
+### Request Body
+
+```json
+{
+  "fullname": {
+    "firstname": "string",  // required
+    "lastname": "string"    // required
+  },
+  "email": "string",       // required, valid email format
+  "password": "string",    // required, minimum 6 characters
+  "vehicle": {
+    "color": "string",        // required
+    "plate": "string",        // required
+    "capacity": number,         // required
+    "vehicleType": "string"   // required, one of ["car", "bike", "auto"]
+  }
+}
+```
+
+### Responses
+
+#### 201 Created
+
+Captain successfully registered. Returns the newly created captain object and an authentication token.
+
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "captain": {
+    "_id": "string",
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "status": "active",
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": number,
+      "vehicleType": "string"
+    }
+  },
+  "token": "string"  // JWT authentication token
+}
+```
+
+#### 400 Bad Request
+
+Validation failed. Missing or invalid fields.
+
+```json
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+  "errors": [
+    {
+      "msg": "string",
+      "param": "string",
+      "location": "body"
+    }
+    // ... additional errors
+  ]
+}
+```

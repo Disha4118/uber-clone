@@ -9,6 +9,9 @@ export const register = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     const { fullname, email, password } = req.body;
+    if (await userSchema.findOne({ email })) {
+        return res.status(400).json({ error: 'User already exists' });
+    }
     const hashedpassword = await userSchema.hashPassword(password);
     const user = await userService.createUser({ firstname: fullname.firstname, lastname: fullname.lastname, email, password: hashedpassword });
     const token = user.generateAuthToken();
