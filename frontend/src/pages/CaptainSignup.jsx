@@ -1,27 +1,58 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-const CaptainSignup = () => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [vehicleColor, setVehicleColor] = useState('')
-  const [vehiclePlate, setVehiclePlate] = useState('')
-  const [vehicleCapacity, setVehicleCapacity] = useState('')
-  const [vehicleType, setVehicleType] = useState('')
-  const [userData, setUserData] = useState({})
+import { CaptainDataContext } from '../context/CaptainContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-  const submitHandler = (e) => {
+const CaptainSignup = () => {
+
+  const navigate = useNavigate()
+
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ firstName, setFirstName ] = useState('')
+  const [ lastName, setLastName ] = useState('')
+
+  const [ vehicleColor, setVehicleColor ] = useState('')
+  const [ vehiclePlate, setVehiclePlate ] = useState('')
+  const [ vehicleCapacity, setVehicleCapacity ] = useState('')
+  const [ vehicleType, setVehicleType ] = useState('')
+
+
+  const { captain, setCaptain } = React.useContext(CaptainDataContext)
+
+
+  const submitHandler = async (e) => {
     e.preventDefault()
-    const data = {
+    const captainData = {
       fullname: {
         firstname: firstName,
         lastname: lastName
       },
       email: email,
-      password: password
+      password: password,
+      vehicle: {
+        color: vehicleColor,
+        plate: vehiclePlate,
+        capacity: vehicleCapacity,
+        vehicleType: vehicleType
+      }
     }
-    setUserData(data)
+
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
+
+      if (response.status === 201) {
+        const data = response.data
+        setCaptain(data.captain)
+        localStorage.setItem('token', data.token)
+        navigate('/captain-home')
+      }
+    } catch (error) {
+      console.error('Registration failed:', error)
+      alert('Registration failed. Please try again.')
+    }
+
     setEmail('')
     setFirstName('')
     setLastName('')
@@ -32,7 +63,6 @@ const CaptainSignup = () => {
     setVehicleType('')
 
   }
-
   return (
     <div className='py-5 px-5 h-screen flex flex-col justify-between'>
       <div>
@@ -41,7 +71,6 @@ const CaptainSignup = () => {
         <form onSubmit={(e) => {
           submitHandler(e)
         }}>
-
 
           <h3 className='text-lg w-full  font-medium mb-2'>What's our Captain's name</h3>
           <div className='flex gap-4 mb-7'>

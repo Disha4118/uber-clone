@@ -1,3 +1,73 @@
+# Uber Clone
+
+A full-stack ride-sharing application inspired by Uber, built with:
+
+- Backend: Node.js, Express, MongoDB
+- Frontend: React, Vite, Tailwind CSS
+
+This repository contains two main folders:
+
+- `backend/`: REST API server handling authentication, user and captain management.
+- `frontend/`: React application for users and captains to sign up, log in, and access protected pages.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14+)
+- npm or yarn
+- MongoDB instance (local or Atlas)
+
+### Installation
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/disha4118/uber-clone.git
+   cd uber-clone
+   ```
+
+2. Install backend dependencies and run server:
+   ```bash
+   cd backend
+   npm install
+   cp .env.example .env   # configure MONGO_URI and JWT_SECRET
+   npm run dev            # or npx nodemon server.js
+   ```
+
+3. Install frontend dependencies and run dev server:
+   ```bash
+   cd ../frontend
+   npm install
+   cp .env.example .env   # set VITE_BASE_URL=http://localhost:3000
+   npm run dev
+   ```
+
+Your application will be running:
+
+- Backend API: http://localhost:3000
+- Frontend: http://localhost:5173
+
+---
+
+## API Documentation
+
+Refer to [`backend/README.md`](backend/README.md) for detailed API endpoint documentation.
+
+## Project Structure
+
+```
+uber-clone/
+├── backend/   # Express API server
+├── frontend/  # React client
+└── README.md  # Project overview and setup instructions
+```
+
+## License
+
+MIT
+
 # API Documentation
 
 ## POST /users/register

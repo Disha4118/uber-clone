@@ -1,16 +1,35 @@
-import {React, useState} from 'react'
-import { Link } from 'react-router-dom'
-
+import {React, useState, useContext} from 'react'
+import { Link, useNavigate} from 'react-router-dom'
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext'
 const UserLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [captaindata, setCaptaindata] = useState(null);
-    const SubmitHandler=(e)=>{
+    const navigate = useNavigate(); 
+    const {user, setUser} = useContext(UserDataContext);
+
+
+    const SubmitHandler=async (e)=>{
         e.preventDefault();
         const newdata = {
             email: email,
             password: password
         };
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, newdata);
+        try {
+            if (response.status === 200) {
+                alert('Login successful');
+                localStorage.setItem('token', response.data.token);
+                setUser(response.data);
+                navigate('/'); 
+            } else {
+                alert('Login failed. Please check your credentials.');
+            }
+        } catch (error) {
+            console.error('Login error:', error.response?.data || error);
+            alert('An error occurred during login. Please try again later.');
+        }
         setCaptaindata(newdata);
         setEmail('');
         setPassword('');
@@ -47,7 +66,7 @@ const UserLogin = () => {
           >Login</button>
 
         </form>
-        <p className='text-center'>New here? <Link to='/captain-signup' className='text-blue-600'>Create new Account</Link></p>
+        <p className='text-center'>New here? <Link to='/signup' className='text-blue-600'>Create new Account</Link></p>
       </div>
       <div>
         <Link
