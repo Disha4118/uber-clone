@@ -6,8 +6,8 @@ import 'remixicon/fonts/remixicon.css'
 import LocationSearchPanel from '../components/LocationSearchPanel';
 import VehiclePanel from '../components/VehiclePanel';
 import ConfirmRide from '../components/ConfirmRide';
-// import LookingForDriver from '../components/LookingForDriver';
-// import WaitingForDriver from '../components/WaitingForDriver';
+import LookingForDriver from '../components/LookingForDriver';
+import WaitingForDriver from '../components/WaitingForDriver';
 // import { SocketContext } from '../context/SocketContext';
 import { useContext } from 'react';
 import { UserDataContext } from '../context/UserContext';
@@ -255,7 +255,7 @@ const Home = () => {
 
                     setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound} />
             </div>
-            {/* <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
+            <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
                 <LookingForDriver
                     createRide={createRide}
                     pickup={pickup}
@@ -270,7 +270,7 @@ const Home = () => {
                     setVehicleFound={setVehicleFound}
                     setWaitingForDriver={setWaitingForDriver}
                     waitingForDriver={waitingForDriver} />
-            </div> */}
+            </div>
         </div>
     )
 }
