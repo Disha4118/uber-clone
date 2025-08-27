@@ -9,8 +9,9 @@ const blacklistTokenSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 86400
+        expires: 86400 // 1 day
     }
 });
 
-module.exports = mongoose.model('BlacklistToken', blacklistTokenSchema);
+// Agar model pehle se exist kare to use karo, warna naya banao
+module.exports = mongoose.models.BlacklistToken || mongoose.model('BlacklistToken', blacklistTokenSchema);

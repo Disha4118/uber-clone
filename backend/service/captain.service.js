@@ -1,20 +1,26 @@
-const CaptainModel=require('../models/captain.model.js');
+const captainModel = require('../models/captain.model');
 
-const registerCaptain = async (captainData) => {
-    // Validate required nested fields
-    if (!captainData.fullname?.firstname || !captainData.fullname?.lastname || !captainData.email || !captainData.password
-        || !captainData.vehicle?.color || !captainData.vehicle?.plate || !captainData.vehicle?.capacity || !captainData.vehicle?.vehicleType) {
-        throw new Error('Missing required fields');
-    }
-    try {
-        const captain = new CaptainModel(captainData);
-        await captain.save();
-        return captain;
-    } catch (error) {
-        throw error;
-    }
-};
 
-module.exports = {
-    registerCaptain
-};
+module.exports.createCaptain = async ({
+    firstname, lastname, email, password, color, plate, capacity, vehicleType
+}) => {
+    if (!firstname || !email || !password || !color || !plate || !capacity || !vehicleType) {
+        throw new Error('All fields are required');
+    }
+    const captain = captainModel.create({
+        fullname: {
+            firstname,
+            lastname
+        },
+        email,
+        password,
+        vehicle: {
+            color,
+            plate,
+            capacity,
+            vehicleType
+        }
+    })
+
+    return captain;
+}
