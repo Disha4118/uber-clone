@@ -13,7 +13,7 @@ module.exports.getAddressCoordinate = async (address) => {
                 ltd: location.lat,
                 lng: location.lng
             };
-        } else {
+        } else { 
             throw new Error('Unable to fetch coordinates');
         }
     } catch (error) {
@@ -74,10 +74,6 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
 }
 
 module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
-
-    // radius in km
-
-
     const captains = await captainModel.find({
         location: {
             $geoWithin: {

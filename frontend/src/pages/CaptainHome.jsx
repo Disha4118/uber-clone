@@ -48,27 +48,25 @@ const CaptainHome = () => {
         // return () => clearInterval(locationInterval)
     }, [])
 
-    socket.on('new-ride', (data) => {
-
-        setRide(data)
-        setRidePopupPanel(true)
-
-    })
+    useEffect(() => {
+        socket.on('new-ride', (data) => {
+            console.log("New ride received:", data);
+            setRide(data)
+            setRidePopupPanel(true)
+        })
+    }, [ socket ])
 
     async function confirmRide() {
 
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
-
             rideId: ride._id,
             captainId: captain._id,
-
-
         }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-
+        console.log("Confirming ride:", ride);
         setRidePopupPanel(false)
         setConfirmRidePopupPanel(true)
 
