@@ -2,13 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useEarning } from '../context/EarningContext'
 
 
 const FinishRide = (props) => {
 
     const navigate = useNavigate()
+    const { setEarning } = useEarning();
 
     async function endRide() {
+        setEarning(prev => prev + props.ride.fare)
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
 
             rideId: props.ride._id

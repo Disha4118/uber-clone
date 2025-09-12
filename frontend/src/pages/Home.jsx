@@ -13,6 +13,7 @@ import { useContext } from 'react';
 import { UserDataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import LiveTracking from '../components/LiveTracking';
+import LogoutPopUp from './LogoutPopUp';
 
 const Home = () => {
     const [ pickup, setPickup ] = useState('')
@@ -211,7 +212,10 @@ const Home = () => {
                     }} className='absolute opacity-0 right-6 top-6 text-2xl'>
                         <i className="ri-arrow-down-wide-line"></i>
                     </h5>
-                    <h4 className='text-2xl font-semibold'>Find a trip</h4>
+                    <div className='flex justify-between'>
+                       <h4 className='text-2xl font-semibold'>Find a trip</h4>
+                       <LogoutPopUp /> 
+                    </div> 
                     <form className='relative py-3' onSubmit={(e) => {
                         submitHandler(e)
                     }}>

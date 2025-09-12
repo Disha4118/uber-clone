@@ -6,16 +6,19 @@ import { BrowserRouter } from 'react-router-dom';
 import UserContext from './context/UserContext.jsx';
 import CaptainContext from './context/CaptainContext.jsx';
 import SocketProvider from './context/SocketContext.jsx';
+import { EarningProvider } from './context/EarningContext.jsx';
 
 createRoot(document.getElementById('root')).render(
 
   <CaptainContext>
     <UserContext>
+      <EarningProvider>
       <SocketProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </SocketProvider>
+      </EarningProvider>
     </UserContext>
   </CaptainContext>
 
