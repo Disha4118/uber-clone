@@ -11,7 +11,7 @@ router.post('/create',
     body('destination').isString().isLength({ min: 3 }).withMessage('Invalid destination address'),
     body('vehicleType').isString().isIn([ 'auto', 'car', 'moto' ]).withMessage('Invalid vehicle type'),
     rideController.createRide
-)
+) 
 
 router.get('/get-fare',
     authMiddleware.isAuth,

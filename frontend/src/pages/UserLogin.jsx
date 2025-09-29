@@ -38,7 +38,7 @@ const UserLogin = () => {
   return (
     <div className='p-7 h-screen flex flex-col justify-between'>
       <div>
-        <img className='w-16 mb-10' src="https://pngimg.com/uploads/uber/small/uber_PNG19.png" alt="" />
+        <img className='w-24 mb-10' src="/uber.png" alt="" />
 
         <form onSubmit={(e) => SubmitHandler(e)}>
           <h3 className='text-lg font-medium mb-2'>What's your email</h3>
